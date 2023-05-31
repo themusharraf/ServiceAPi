@@ -1,0 +1,22 @@
+services:
+  wep-app:
+    container_name: apiserver
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=database
+      - DB_NAME=apidb
+      - DB_PASS=1
+      - DB_USER=postgres
+    command: >
+       sh -c "python manage.py runserver 0.0.0.0:8000"
+
+  database:
+    image: postgres:14-alpine
+    container_name: pgdata
+    environment:
+      - POSTGRES_DB=apidb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1
